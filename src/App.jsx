@@ -38,6 +38,7 @@ function App() {
 
       return [...prevItems, { ...item, quantite: 1 }];
     });
+    setTotal(prevTotal => prevTotal + item.price);
   }
 
   function vueSlideCart() {
