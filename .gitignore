@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 
 # data
-.data/*
-!.data/data.json
+src/data.js
