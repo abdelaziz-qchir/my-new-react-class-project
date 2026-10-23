@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ApiCard from "../components/api-card.jsx"
 
 function Service() {
     const [apiProducts, setApiProduct] = useState([])
@@ -16,7 +17,7 @@ function Service() {
     return (
         <div className="service">
             {
-                apiProducts.map(item => <h3 key={item.id} >{item.title}</h3>)
+                 apiProducts.map((item) => (<ApiCard key={item.id} item={item} />)) 
             }
         </div>
     )
