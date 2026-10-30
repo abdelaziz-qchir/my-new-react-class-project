@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/Caps-Shop-Logo.png";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "./useContext";
 
-function Header({cart, fav, slideCart, favSlider}) {
+function Header() {
+    const {cartItems, favoriteItems, vueSlideCart, vueFavoriteSlider} = useContext(AppContext)
     const [user, setUser] = useState(null);
     useEffect(() => {
         async function getUser() {
@@ -25,8 +27,8 @@ function Header({cart, fav, slideCart, favSlider}) {
                 <li><Link className="header-link" to="/service">Service</Link></li>
                 <li><Link className="header-link" to="/contact">Contact</Link></li>
                 {user && user.id ? <li><img width="50" height="50" src={user.image} alt="profile" /></li> : <li><Link className="header-link" to="/login">Login</Link></li>}
-                <li><button className="shopping-cart" onClick={slideCart}><FaShoppingCart /> {cart.length}</button></li>
-                <li><button className="favorite-slider" onClick={favSlider}><FaHeart />{fav.length}</button></li>
+                <li><button className="shopping-cart" onClick={vueSlideCart}><FaShoppingCart /> {cartItems.length}</button></li>
+                <li><button className="favorite-slider" onClick={vueFavoriteSlider}><FaHeart />{favoriteItems.length}</button></li>
                 <li><span></span></li>
             </ul>
         </header>

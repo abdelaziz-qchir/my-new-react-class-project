@@ -9,6 +9,7 @@ import Detail from './components/detail.jsx'
 import DropCart from './components/DropCart.jsx'
 import DropFav from './components/DropFav.jsx'
 import './App.css'
+import { AppContext } from './components/useContext.jsx'
 
 function App() {
   const [cartItems, setCartItems] = useState([])
@@ -17,7 +18,7 @@ function App() {
   const [favoriteItems, setFavoriteItems] = useState([])
   const [favoriteSlider, setFavoriteSlider] = useState(false)
 
-  const [total, setTotal ] = useState(0)
+  const [total, setTotal] = useState(0)
 
   function addToCart(item) {
     setCartItems(prevItems => {
@@ -66,11 +67,11 @@ function App() {
 
   function plusQte(item) {
     setCartItems(cartItems.map(produit => produit.id != item.id ? produit : { ...produit, "quantite": produit.quantite + 1 }))
-    setTotal(total+item.price)
+    setTotal(total + item.price)
   }
 
   function minusQte(item) {
-    setTotal(total-item.price)
+    setTotal(total - item.price)
     if (item.quantite == 1) {
       setCartItems(cartItems.filter(produit => produit != item))
     } else {
@@ -82,20 +83,22 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Header cart={cartItems} fav={favoriteItems} slideCart={vueSlideCart} favSlider={vueFavoriteSlider} />
-        <Routes>
-          <Route path="/" element={<Navigate to="/acceuil" />} />
-          <Route path='/acceuil' element={<Acceuil addToCart={addToCart} addToFavorite={addToFavorite} />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/service' element={<Service />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/detail/:id' element={<Detail />} />
-          {/* <Route path='/cart' element={<Cart cartItems={cartItems} />}/> */}
-        </Routes>
-        {sliderCart ? <DropCart total={total} cartItems={cartItems} plusQte={plusQte} minusQte={minusQte} /> : null}
-        {favoriteSlider ? <DropFav favoriteItems={favoriteItems} /> : null}
-      </BrowserRouter>
+      <AppContext.Provider value={{cartItems, favoriteItems, vueSlideCart, vueFavoriteSlider, addToFavorite, addToCart, total, plusQte, minusQte, }}>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Navigate to="/acceuil" />} />
+            <Route path='/acceuil' element={<Acceuil />} />
+            <Route path='/contact' element={<Contact />} />
+            <Route path='/service' element={<Service />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/detail/:id' element={<Detail />} />
+            {/* <Route path='/cart' element={<Cart cartItems={cartItems} />}/> */}
+          </Routes>
+          {sliderCart ? <DropCart /> : null}
+          {favoriteSlider ? <DropFav /> : null}
+        </BrowserRouter>
+      </AppContext.Provider>
     </>
   )
 }

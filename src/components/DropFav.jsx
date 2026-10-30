@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import Favorite from './favorite'
+import { AppContext } from './useContext';
 
-function Dropfav({favoriteItems}) {
+function Dropfav() {
+    const {favoriteItems} = useContext(AppContext)
     
     return (
         <div className="fav-drop">

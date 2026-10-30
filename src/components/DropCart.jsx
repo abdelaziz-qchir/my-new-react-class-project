@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import Cart from './cart'
+import { AppContext } from './useContext';
 
-function DropCart({cartItems, plusQte, minusQte, total}) {
+function DropCart() {
+    const {cartItems, total, plusQte, minusQte} = useContext(AppContext)
     
     return (
         <div className="cart-drop">
